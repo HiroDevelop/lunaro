@@ -2,67 +2,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Lunaro Token</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lunaro — Earth-Based Digital Asset</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
+    :root {
+      --bg: #0b0f1a;
+      --fg: #e6e6e6;
+      --accent: #4fc3f7;
+      --muted: #9aa4b2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont;
-      background: #0b0f1a;
-      color: #e6e9f0;
       margin: 0;
-      padding: 40px;
+      padding: 0;
+      background: radial-gradient(circle at top, #11182b, #05070d);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+      text-align: center;
     }
-    .card {
+
+    .container {
       max-width: 720px;
-      margin: auto;
-      background: #11162a;
-      border-radius: 14px;
-      padding: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+      margin: 0 auto;
+      padding: 48px 24px 64px;
     }
+
+    .logo {
+      margin-top: 24px;
+      margin-bottom: 32px;
+    }
+
+    .logo img {
+      width: 180px;
+      max-width: 60vw;
+      border-radius: 50%;
+      box-shadow:
+        0 0 40px rgba(79, 195, 247, 0.45),
+        0 0 80px rgba(79, 195, 247, 0.15);
+    }
+
     h1 {
-      margin-top: 0;
-      color: #7cf5d3;
-      letter-spacing: 1px;
+      font-size: 2.6rem;
+      margin: 16px 0 8px;
+      letter-spacing: 0.04em;
     }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 24px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+
     .label {
-      opacity: 0.7;
-      font-size: 14px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
     }
+
     .value {
-      font-family: monospace;
+      font-size: 1.05rem;
       word-break: break-all;
-      margin-bottom: 16px;
     }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
     footer {
-      margin-top: 32px;
-      opacity: 0.5;
-      font-size: 13px;
+      margin-top: 56px;
+      font-size: 0.85rem;
+      color: var(--muted);
     }
   </style>
 </head>
+
 <body>
+  <div class="container">
 
-  <div class="card">
-    <h1>LUNARO</h1>
-    <p class="label">Token</p>
-    <div class="value">LUNARO</div>
-
-    <p class="label">Network</p>
-    <div class="value">Ethereum Sepolia</div>
-
-    <p class="label">Contract</p>
-    <div class="value">
-      0xD702180da821851F9AFA5831058C69959AB9D77D
+    <div class="logo">
+      <img src="/assets/lunaro-earth.png" alt="Lunaro Earth Emblem">
     </div>
 
-    <p class="label">Total Supply</p>
-    <div class="value">1,000,000,000 LUNARO</div>
+    <h1>LUNARO</h1>
+    <h2>Earth-Based Digital Asset</h2>
+
+    <div class="card">
+      <div class="label">Company</div>
+      <div class="value">Simsbook LLC</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Token</div>
+      <div class="value">LUNARO (ERC-20)</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Network</div>
+      <div class="value">Ethereum Sepolia</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Contract Address</div>
+      <div class="value">
+        <a href="https://sepolia.etherscan.io/address/0xD702180da821851F9AFA5831058C69959AB9D77D"
+           target="_blank" rel="noopener noreferrer">
+          0xD702180da821851F9AFA5831058C69959AB9D77D
+        </a>
+      </div>
+    </div>
 
     <footer>
-      © 2026 Lunaro · Guardian of Earth
+      © 2026 Simsbook LLC · Lunaro Project<br>
+      Built on Earth · Designed for the future
     </footer>
-  </div>
 
+  </div>
 </body>
 </html>
