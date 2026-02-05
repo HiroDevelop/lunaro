@@ -274,8 +274,16 @@
       .grid{ grid-template-columns: 1fr; }
     }
   </style>
+  <style>
+    /* subtle fade-in */
+    .fade-in{opacity:0;transform:translateY(8px);animation:fadeInUp .9s ease-out .08s forwards}
+     fadeInUp{to{opacity:1;transform:translateY(0)}}
+     (prefers-reduced-motion: reduce){.fade-in{animation:none;opacity:1;transform:none}}
+  </style>
 </head>
 <body>
+  <div class="fade-in">
+  <div class="fade-in">
   <div class="wrap">
     <header>
       <a class="brand" href="/">
@@ -361,6 +369,8 @@
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
   </script>
+  </div>
+  </div>
 </body>
 </html>
 
