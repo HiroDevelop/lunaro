@@ -1,376 +1,756 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Lunaro — Earth-Based Digital Asset</title>
-  <meta name="description" content="Lunaro is an Earth-anchored digital asset designed for clarity, transparency, and future-ready systems." />
+  <meta name="description" content="Lunaro (LUNARO) — Earth-anchored ERC-20 token. Transparent, verifiable, and future-ready. Sepolia testnet today, mainnet-ready later." />
+
+  <!-- Social cards (optional but nice) -->
+  <meta property="og:title" content="Lunaro — Earth-Based Digital Asset" />
+  <meta property="og:description" content="Earth-Anchored. Simple. Strong. ERC-20 token with transparent contract details." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0b1220" />
+
   <style>
     :root{
-      --bg0:#05070c;
-      --bg1:#081224;
+      --bg0:#070b12;
+      --bg1:#0a1428;
       --card:rgba(255,255,255,.06);
       --card2:rgba(255,255,255,.08);
+      --line:rgba(255,255,255,.10);
       --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.68);
-      --line:rgba(255,255,255,.14);
-      --glow:rgba(110,220,255,.18);
-      --accent:rgba(110,220,255,.95);
-      --accent2:rgba(120,150,255,.9);
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 22px;
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.55);
+      --accent:#3bb7ff;
+      --accent2:#7ce7ff;
+      --ok:#5dffa6;
+      --warn:#ffd36a;
+      --bad:#ff6b6b;
+      --shadow: 0 18px 48px rgba(0,0,0,.55);
+      --shadow2: 0 10px 28px rgba(0,0,0,.45);
+      --radius:24px;
+      --radius2:18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family:var(--sans);
       color:var(--text);
       background:
-        radial-gradient(1000px 700px at 75% 20%, rgba(110,220,255,.18), transparent 60%),
-        radial-gradient(900px 700px at 25% 0%, rgba(120,150,255,.16), transparent 58%),
+        radial-gradient(1200px 600px at 20% 10%, rgba(60,183,255,.18), transparent 55%),
+        radial-gradient(900px 500px at 80% 20%, rgba(124,231,255,.10), transparent 60%),
+        radial-gradient(900px 700px at 50% 100%, rgba(255,255,255,.05), transparent 60%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
 
-    .wrap{
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 28px 18px 48px;
+    /* subtle fade-in */
+    .fade-in{opacity:0;transform:translateY(8px);animation:fadeInUp .9s ease-out .08s forwards}
+    @keyframes fadeInUp{to{opacity:1;transform:translateY(0)}}
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{animation:none;opacity:1;transform:none}
+      .spin{animation:none}
     }
 
-    header{
+    a{color:inherit}
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:28px 18px 64px;
+    }
+
+    /* Topbar */
+    .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      padding: 10px 2px 18px;
+      padding:14px 14px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius:999px;
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
     }
-
     .brand{
       display:flex;
       align-items:center;
       gap:12px;
-      text-decoration:none;
-      color:var(--text);
+      min-width:0;
     }
     .dot{
-      width:10px; height:10px; border-radius:999px;
-      background: var(--accent);
-      box-shadow: 0 0 22px var(--glow);
+      width:10px;height:10px;border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, var(--accent2), var(--accent));
+      box-shadow: 0 0 0 4px rgba(59,183,255,.18);
+      flex:0 0 auto;
     }
-    .brand b{
-      letter-spacing:.4px;
-      font-size: 15px;
+    .brand h1{
+      font-size:18px;
+      line-height:1.1;
+      margin:0;
+      letter-spacing:.2px;
     }
-    .brand span{
-      display:block;
-      font-size:12px;
+    .brand p{
+      margin:3px 0 0;
+      font-size:13px;
       color:var(--muted);
-      margin-top:2px;
       letter-spacing:.2px;
     }
 
     .pill{
-      font-size:12px;
-      color:var(--muted);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      padding: 8px 12px;
-      border-radius: 999px;
-      backdrop-filter: blur(10px);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .pill b{color:var(--text); font-weight:600}
+    .pill .statusDot{
+      width:8px;height:8px;border-radius:999px;
+      background:var(--ok);
+      box-shadow:0 0 0 4px rgba(93,255,166,.15);
     }
 
+    /* Hero */
     .hero{
+      margin-top:20px;
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
       align-items:stretch;
-      margin-top: 10px;
+    }
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr; }
     }
 
     .card{
-      border: 1px solid var(--line);
-      background: var(--card);
+      border:1px solid var(--line);
       border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
       box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
       overflow:hidden;
-      position:relative;
     }
-
-    .hero-left{
-      padding: 26px 24px 22px;
+    .cardInner{ padding:26px 26px 22px; }
+    .heroTitle{
+      font-size:56px;
+      line-height:1.0;
+      margin:0;
+      letter-spacing:-.9px;
     }
-
-    h1{
-      margin: 0 0 10px;
-      font-size: 38px;
-      line-height: 1.08;
-      letter-spacing: .2px;
+    @media (max-width: 520px){
+      .heroTitle{font-size:44px;}
     }
-
     .lead{
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.6;
-      max-width: 58ch;
+      margin:14px 0 0;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.6;
+      max-width:58ch;
     }
 
-    .cta{
+    .actions{
+      margin-top:18px;
       display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
+      flex-wrap:wrap;
+      gap:10px;
     }
-
     .btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
+      gap:10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      padding:12px 16px;
+      font-weight:600;
+      letter-spacing:.2px;
       text-decoration:none;
-      color: var(--text);
-      background: rgba(255,255,255,.04);
-      transition: transform .08s ease, background .18s ease, border-color .18s ease;
-      font-size: 14px;
-      letter-spacing:.15px;
+      cursor:pointer;
+      user-select:none;
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      transition: transform .08s ease, background .15s ease, border-color .15s ease;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.22);
+    .btn:hover{ background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.16); }
+    .btn:active{ transform: translateY(1px); }
+    .btnPrimary{
+      background: linear-gradient(180deg, rgba(59,183,255,.30), rgba(59,183,255,.12));
+      border-color: rgba(59,183,255,.35);
     }
-    .btn.primary{
-      border-color: rgba(110,220,255,.35);
-      background: linear-gradient(135deg, rgba(110,220,255,.18), rgba(120,150,255,.12));
+    .btnPrimary:hover{
+      background: linear-gradient(180deg, rgba(59,183,255,.36), rgba(59,183,255,.14));
+      border-color: rgba(59,183,255,.50);
     }
-    .btn code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      font-size: 12px;
-      color: rgba(255,255,255,.85);
-      background: rgba(0,0,0,.22);
-      padding: 4px 8px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.10);
+    .btnSmall{
+      padding:10px 13px;
+      font-size:13px;
+      font-weight:600;
     }
 
-    .trust{
-      margin-top: 18px;
-      border-top: 1px solid var(--line);
-      padding-top: 16px;
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 10px 14px;
-    }
-    .kv{
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-    }
-    .k{
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: .35px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .v{
-      font-size: 14px;
-      color: var(--text);
-      letter-spacing: .2px;
-      word-break: break-all;
-    }
-
-    .hero-right{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 16px;
-      background:
-        radial-gradient(420px 320px at 50% 40%, rgba(110,220,255,.14), transparent 65%),
-        radial-gradient(360px 260px at 40% 70%, rgba(120,150,255,.12), transparent 70%);
-    }
-
-    .logo-frame{
-      width: 100%;
-      max-width: 360px;
-      aspect-ratio: 1 / 1;
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.22);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
+    .kbd{
+      font-family:var(--mono);
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,0,0,.18);
+      color:rgba(255,255,255,.86);
+      max-width: 220px;
       overflow:hidden;
-    }
-
-    .logo-frame:before{
-      content:"";
-      position:absolute;
-      inset:-80px;
-      background: conic-gradient(from 210deg, rgba(110,220,255,.0), rgba(110,220,255,.20), rgba(120,150,255,.0));
-      filter: blur(10px);
-      opacity:.9;
-    }
-
-    .logo-frame img{
-      position:relative;
-      width: 84%;
-      height: 84%;
-      object-fit: contain;
-      filter: drop-shadow(0 18px 38px rgba(0,0,0,.55));
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
     .grid{
+      margin-top:18px;
       display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 14px;
-      margin-top: 16px;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:12px;
     }
-    .mini{
-      padding: 16px 16px 14px;
+    @media (max-width: 650px){
+      .grid{grid-template-columns:1fr;}
     }
-    .mini h3{
-      margin:0 0 8px;
-      font-size: 14px;
-      letter-spacing:.2px;
+    .tile{
+      padding:14px 14px;
+      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.14);
     }
-    .mini p{
+    .tile .label{
+      font-size:12px;
+      color:var(--muted2);
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      margin:0 0 6px;
+    }
+    .tile .value{
       margin:0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    footer{
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
+      font-size:18px;
+      color:var(--text);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 12px;
+      gap:10px;
+      flex-wrap:wrap;
     }
-
     .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      font-size: 12px;
-      color: rgba(255,255,255,.76);
+      font-family:var(--mono);
+      font-size:13px;
+      color:rgba(255,255,255,.84);
+      word-break:break-all;
     }
 
-    @media (max-width: 880px){
-      .hero{ grid-template-columns: 1fr; }
-      h1{ font-size: 32px; }
-      .grid{ grid-template-columns: 1fr; }
+    /* Emblem card */
+    .emblemWrap{
+      display:flex;
+      flex-direction:column;
+      height:100%;
     }
-  </style>
-  <style>
-    /* subtle fade-in */
-    .fade-in{opacity:0;transform:translateY(8px);animation:fadeInUp .9s ease-out .08s forwards}
-     fadeInUp{to{opacity:1;transform:translateY(0)}}
-     (prefers-reduced-motion: reduce){.fade-in{animation:none;opacity:1;transform:none}}
+    .emblemTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px 20px;
+      border-bottom:1px solid var(--line);
+      background:rgba(0,0,0,.12);
+    }
+    .emblemTop .title{
+      margin:0;
+      font-size:14px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.78);
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .badge .netDot{width:8px;height:8px;border-radius:999px;background:var(--warn); box-shadow:0 0 0 4px rgba(255,211,106,.14);}
+    .badge .netDot.mainnet{ background: var(--ok); box-shadow:0 0 0 4px rgba(93,255,166,.14); }
+
+    .emblemBody{
+      padding:22px 22px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:1 1 auto;
+    }
+    .emblem{
+      width:min(340px, 85%);
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      display:block;
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,.55));
+      transform: translateZ(0);
+    }
+    .spin{
+      animation: spinSlow 18s linear infinite;
+    }
+    @keyframes spinSlow{
+      from{transform: rotate(0deg)}
+      to{transform: rotate(360deg)}
+    }
+
+    .emblemFooter{
+      padding:16px 20px 20px;
+      border-top:1px solid var(--line);
+      background:rgba(0,0,0,.10);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    /* Modal */
+    .backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:50;
+    }
+    .backdrop.show{display:flex;}
+    .modal{
+      width:min(720px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(20,28,45,.95), rgba(10,14,22,.92));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.10);
+    }
+    .modalHeader h3{
+      margin:0;
+      font-size:14px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.80);
+    }
+    .modalBody{ padding:16px; color:var(--muted); }
+    .modalBody ul{ margin:10px 0 0; padding-left:18px; }
+    .modalBody li{ margin:8px 0; }
+    .xbtn{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:rgba(255,255,255,.90);
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .xbtn:hover{ background:rgba(255,255,255,.07); }
+
+    /* Footer */
+    footer{
+      margin-top:22px;
+      border-top:1px solid rgba(255,255,255,.10);
+      padding-top:18px;
+      color:rgba(255,255,255,.55);
+      font-size:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    footer a{ color:rgba(255,255,255,.70); text-decoration:none; }
+    footer a:hover{ text-decoration:underline; }
+    .footLeft{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+    .sep{opacity:.35}
+    .toast{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:16px;
+      background:rgba(0,0,0,.70);
+      border:1px solid rgba(255,255,255,.16);
+      color:rgba(255,255,255,.92);
+      padding:10px 12px;
+      border-radius:999px;
+      font-size:13px;
+      box-shadow: 0 14px 32px rgba(0,0,0,.55);
+      display:none;
+      z-index:80;
+      backdrop-filter: blur(8px);
+    }
+    .toast.show{display:block;}
   </style>
 </head>
+
 <body>
-  <div class="fade-in">
-  <div class="fade-in">
-  <div class="wrap">
-    <header>
-      <a class="brand" href="/">
+  <div class="container fade-in">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="brand">
         <span class="dot"></span>
-        <div>
-          <b>Lunaro</b>
-          <span>Lunaro Project — Earth-Based Digital Asset</span>
-        </div>
-      </a>
-      <div class="pill">Sepolia Testnet • ERC-20</div>
-    </header>
-
-    <section class="hero">
-      <div class="card hero-left">
-        <h1>Earth-Anchored. Simple. Strong.</h1>
-        <p class="lead">
-          Lunaro is an Earth-based coin emblem and ERC-20 token designed to be transparent, verifiable, and future-ready.
-          This site currently points to the Sepolia deployment for testing and public review.
-        </p>
-
-        <div class="cta">
-          <a class="btn primary" href="https://sepolia.etherscan.io/address/0xD702180da821851F9AFA5831058C69959AB9D77D" target="_blank" rel="noreferrer">
-            View Contract <code>0xD702…D77D</code>
-          </a>
-          <a class="btn" href="#token">Token Details</a>
-        </div>
-
-        <div id="token" class="trust">
-          <div class="kv">
-            <div class="k">Token</div>
-            <div class="v">Lunaro (LUNARO)</div>
-          </div>
-          <div class="kv">
-            <div class="k">Total Supply</div>
-            <div class="v">1,000,000,000</div>
-          </div>
-          <div class="kv">
-            <div class="k">Network</div>
-            <div class="v">Sepolia (Testnet)</div>
-          </div>
-          <div class="kv">
-            <div class="k">Contract</div>
-            <div class="v mono">0xD702180da821851F9AFA5831058C69959AB9D77D</div>
-          </div>
-          <div class="kv">
-            <div class="k">Status</div>
-            <div class="v">Live • Public</div>
-          </div>
-          <div class="kv">
-            <div class="k">Emblem</div>
-            <div class="v">Earth Coin Mark</div>
-          </div>
+        <div style="min-width:0">
+          <h1>Lunaro</h1>
+          <p id="subtitle">Lunaro Project — Earth-Based Digital Asset</p>
         </div>
       </div>
 
-      <div class="card hero-right">
-        <div class="logo-frame">
-          <img src="/assets/lunaro-earth.png" alt="Lunaro Earth Emblem" />
+      <div class="pill" title="Network & token standard">
+        <span class="statusDot" id="liveDot"></span>
+        <span id="netLabel"><b>Sepolia Testnet</b> • ERC-20</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <!-- Left main -->
+      <div class="card">
+        <div class="cardInner">
+          <h2 class="heroTitle">Earth-Anchored.<br/>Simple. Strong.</h2>
+
+          <p class="lead">
+            Lunaro is an Earth-based coin emblem and ERC-20 token designed to be transparent,
+            verifiable, and future-ready. This site currently points to the <b id="netNameInline">Sepolia</b>
+            deployment for testing and public review.
+          </p>
+
+          <div class="actions">
+            <a class="btn btnPrimary" id="btnContract" href="#" target="_blank" rel="noopener">
+              View Contract <span class="kbd" id="contractShort">0x…</span>
+            </a>
+
+            <button class="btn" id="btnCopyContract" type="button">
+              Copy Address
+            </button>
+
+            <button class="btn" id="btnDetails" type="button">
+              Token Details
+            </button>
+          </div>
+
+          <div class="grid">
+            <div class="tile">
+              <div class="label">Token</div>
+              <p class="value">
+                <span id="tokenName">Lunaro (LUNARO)</span>
+              </p>
+            </div>
+
+            <div class="tile">
+              <div class="label">Total Supply</div>
+              <p class="value">
+                <span id="supply">1,000,000,000</span>
+              </p>
+            </div>
+
+            <div class="tile">
+              <div class="label">Network</div>
+              <p class="value">
+                <span id="networkPretty">Sepolia (Testnet)</span>
+              </p>
+            </div>
+
+            <div class="tile">
+              <div class="label">Contract</div>
+              <p class="value">
+                <span class="mono" id="contractFull">0x…</span>
+                <button class="btn btnSmall" id="btnCopyMini" type="button">Copy</button>
+              </p>
+            </div>
+
+            <div class="tile">
+              <div class="label">Status</div>
+              <p class="value">
+                <span id="statusText">Live • Public</span>
+              </p>
+            </div>
+
+            <div class="tile">
+              <div class="label">Emblem</div>
+              <p class="value">
+                <span>Earth Coin Mark</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section class="grid">
-      <div class="card mini">
-        <h3>Verifiable</h3>
-        <p>Anyone can inspect the contract and confirm balances and behavior directly on-chain.</p>
-      </div>
-      <div class="card mini">
-        <h3>Controlled</h3>
-        <p>Owner controls pause/unpause for safety testing and operational discipline.</p>
-      </div>
-      <div class="card mini">
-        <h3>Earth Presence</h3>
-        <p>A simple emblem with strong presence — built to represent the project clearly.</p>
-      </div>
-    </section>
+      <!-- Right emblem -->
+      <div class="card emblemWrap">
+        <div class="emblemTop">
+          <p class="title">Emblem</p>
+          <span class="badge" id="badgeNet">
+            <span class="netDot" id="badgeDot"></span>
+            <span id="badgeText">Sepolia Testnet</span>
+          </span>
+        </div>
 
+        <div class="emblemBody">
+          <!-- Your file: public/assets/lunaro-earth.png -->
+          <img class="emblem" id="emblemImg" src="/assets/lunaro-earth.png" alt="Lunaro Earth Emblem" />
+        </div>
+
+        <div class="emblemFooter">
+          <b>Design note:</b> a clean Earth-based mark for a token that aims to remain simple,
+          auditable, and globally recognizable.
+          <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btnSmall" id="btnSpin" type="button">Toggle Spin</button>
+            <button class="btn btnSmall" id="btnSwitchNet" type="button">Mainnet Prep</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
     <footer>
-      <div>© <span id="y"></span> Lunaro Project</div>
+      <div class="footLeft">
+        <span>© <span id="year"></span> <b id="companyName">Simsbook LLC</b></span>
+        <span class="sep">•</span>
+        <span>Published by <span id="publisher">HiroDevelop</span></span>
+        <span class="sep">•</span>
+        <span id="footNet">Sepolia testnet page</span>
+      </div>
+      <div class="footRight">
+        <a id="repoLink" href="#" target="_blank" rel="noopener">GitHub</a>
+        <span class="sep">•</span>
+        <a id="vercelLink" href="#" target="_blank" rel="noopener">Vercel</a>
+      </div>
     </footer>
   </div>
 
+  <!-- Modal -->
+  <div class="backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="Token Details">
+    <div class="modal">
+      <div class="modalHeader">
+        <h3>Token Details</h3>
+        <button class="xbtn" id="modalClose" type="button">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="mono" style="margin-bottom:12px">
+          Contract: <span id="modalContract">0x…</span>
+        </div>
+        <ul>
+          <li><b>Name:</b> <span id="modalName">Lunaro Token</span></li>
+          <li><b>Symbol:</b> <span id="modalSymbol">LUNARO</span></li>
+          <li><b>Standard:</b> ERC-20</li>
+          <li><b>Network:</b> <span id="modalNetwork">Sepolia (Testnet)</span></li>
+          <li><b>Supply:</b> <span id="modalSupply">1,000,000,000</span></li>
+          <li><b>Note:</b> Public contract address is normal for tokens. It’s how people verify authenticity.</li>
+        </ul>
+
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn btnPrimary btnSmall" id="modalView" href="#" target="_blank" rel="noopener">View on Explorer</a>
+          <button class="btn btnSmall" id="modalCopy" type="button">Copy Address</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied</div>
+
   <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
+    /*****************************************************************
+     * Lunaro homepage config (Mainnet-ready structure)
+     *
+     * How to use later:
+     *  - When you deploy on mainnet, update MAINNET.contract and MAINNET.explorerBase
+     *  - You can switch modes by adding ?net=mainnet or ?net=sepolia
+     *****************************************************************/
+    const CONFIG = {
+      tokenName: "Lunaro Token",
+      symbol: "LUNARO",
+      totalSupply: "1,000,000,000",
+      companyName: "Simsbook LLC",
+      publisher: "HiroDevelop",
+      githubRepo: "https://github.com/HiroDevelop/lunaro",
+      vercelSite: "https://lunaro-orpin.vercel.app/",
+      SEPOLIA: {
+        networkPretty: "Sepolia (Testnet)",
+        netLabel: "Sepolia Testnet",
+        chainId: 11155111,
+        contract: "0xD702180da821851F9AFA5831058C69959AB9D77D",
+        explorerBase: "https://sepolia.etherscan.io/address/"
+      },
+      MAINNET: {
+        networkPretty: "Ethereum (Mainnet)",
+        netLabel: "Ethereum Mainnet",
+        chainId: 1,
+        contract: "", // TODO: put mainnet contract later
+        explorerBase: "https://etherscan.io/address/"
+      }
+    };
+
+    function $(id){ return document.getElementById(id); }
+
+    function shortAddr(addr){
+      if (!addr || addr.length < 10) return "0x…";
+      return addr.slice(0,6) + "…" + addr.slice(-4);
+    }
+
+    function toast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(()=>t.classList.remove("show"), 1300);
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("Copied");
+      }catch(e){
+        // fallback prompt
+        window.prompt("Copy this:", text);
+      }
+    }
+
+    function getNetMode(){
+      const url = new URL(window.location.href);
+      const net = (url.searchParams.get("net") || "").toLowerCase().trim();
+      if (net === "mainnet") return "MAINNET";
+      if (net === "sepolia") return "SEPOLIA";
+      return "SEPOLIA";
+    }
+
+    function setNetMode(mode){
+      const url = new URL(window.location.href);
+      url.searchParams.set("net", mode.toLowerCase());
+      // avoid cache surprises
+      url.searchParams.set("v", String(Date.now()).slice(-6));
+      window.location.href = url.toString();
+    }
+
+    function explorerLink(netCfg){
+      return netCfg.explorerBase + netCfg.contract;
+    }
+
+    function applyNet(mode){
+      const netCfg = CONFIG[mode];
+      const isMainnet = (mode === "MAINNET");
+      const hasContract = !!netCfg.contract;
+
+      $("year").textContent = String(new Date().getFullYear());
+      $("companyName").textContent = CONFIG.companyName;
+      $("publisher").textContent = CONFIG.publisher;
+
+      $("repoLink").href = CONFIG.githubRepo;
+      $("vercelLink").href = CONFIG.vercelSite;
+
+      $("tokenName").textContent = `${CONFIG.tokenName} (${CONFIG.symbol})`;
+      $("supply").textContent = CONFIG.totalSupply;
+      $("networkPretty").textContent = netCfg.networkPretty;
+
+      $("badgeText").textContent = netCfg.netLabel;
+      $("netLabel").innerHTML = `<b>${netCfg.netLabel}</b> • ERC-20`;
+      $("netNameInline").textContent = isMainnet ? "Mainnet" : "Sepolia";
+      $("subtitle").textContent = "Lunaro Project — Earth-Based Digital Asset";
+
+      $("footNet").textContent = isMainnet ? "Mainnet page" : "Sepolia testnet page";
+
+      // dots
+      const dot = $("badgeDot");
+      dot.classList.toggle("mainnet", isMainnet);
+
+      // contract
+      $("contractFull").textContent = netCfg.contract || "(not deployed yet)";
+      $("contractShort").textContent = shortAddr(netCfg.contract || "0x");
+
+      // modal
+      $("modalContract").textContent = netCfg.contract || "(not deployed yet)";
+      $("modalName").textContent = CONFIG.tokenName;
+      $("modalSymbol").textContent = CONFIG.symbol;
+      $("modalNetwork").textContent = netCfg.networkPretty;
+      $("modalSupply").textContent = CONFIG.totalSupply;
+
+      // contract/explorer buttons
+      const contractUrl = hasContract ? explorerLink(netCfg) : "#";
+      $("btnContract").href = contractUrl;
+      $("modalView").href = contractUrl;
+
+      // status text
+      if (isMainnet && !hasContract){
+        $("statusText").textContent = "Mainnet • Not deployed yet";
+        $("btnContract").classList.add("btnDisabled");
+      } else {
+        $("statusText").textContent = isMainnet ? "Mainnet • Live" : "Live • Public";
+      }
+
+      // “Mainnet Prep” button toggles between sepolia/mainnet
+      $("btnSwitchNet").textContent = isMainnet ? "Back to Sepolia" : "Mainnet Prep";
+      $("btnSwitchNet").onclick = () => setNetMode(isMainnet ? "SEPOLIA" : "MAINNET");
+    }
+
+    // Modal
+    function openModal(){
+      $("modalBackdrop").classList.add("show");
+    }
+    function closeModal(){
+      $("modalBackdrop").classList.remove("show");
+    }
+
+    // Spin toggle
+    let spinning = false;
+    function toggleSpin(){
+      spinning = !spinning;
+      $("emblemImg").classList.toggle("spin", spinning);
+      toast(spinning ? "Spin on" : "Spin off");
+    }
+
+    // Wire events
+    $("btnDetails").addEventListener("click", openModal);
+    $("modalClose").addEventListener("click", closeModal);
+    $("modalBackdrop").addEventListener("click", (e)=>{ if(e.target === $("modalBackdrop")) closeModal(); });
+    window.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeModal(); });
+
+    $("btnCopyContract").addEventListener("click", ()=>{
+      const mode = getNetMode();
+      const addr = CONFIG[mode].contract;
+      if (!addr){ toast("No mainnet contract yet"); return; }
+      copyText(addr);
+    });
+    $("btnCopyMini").addEventListener("click", ()=>{
+      const mode = getNetMode();
+      const addr = CONFIG[mode].contract;
+      if (!addr){ toast("No mainnet contract yet"); return; }
+      copyText(addr);
+    });
+    $("modalCopy").addEventListener("click", ()=>{
+      const mode = getNetMode();
+      const addr = CONFIG[mode].contract;
+      if (!addr){ toast("No mainnet contract yet"); return; }
+      copyText(addr);
+    });
+
+    $("btnSpin").addEventListener("click", toggleSpin);
+
+    // Init
+    applyNet(getNetMode());
   </script>
-  </div>
-  </div>
 </body>
 </html>
 
